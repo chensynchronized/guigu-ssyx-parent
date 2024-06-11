@@ -8,4 +8,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 public interface RegionWareService extends IService<RegionWare> {
     IPage<RegionWare> selectPage(Page<RegionWare> pageParam, RegionWareQueryVo regionWareQueryVo);
+
+    void saveRegionSave(RegionWare regionWare);
+
+    void updateStatus(Long id, Integer status);
 }

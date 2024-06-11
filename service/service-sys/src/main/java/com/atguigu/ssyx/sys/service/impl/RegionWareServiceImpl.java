@@ -1,5 +1,7 @@
 package com.atguigu.ssyx.sys.service.impl;
 
+import com.atguigu.ssyx.common.exception.SsyxException;
+import com.atguigu.ssyx.common.result.ResultCodeEnum;
 import com.atguigu.ssyx.model.sys.RegionWare;
 
 import com.atguigu.ssyx.sys.mapper.RegionWareMapper;
@@ -33,5 +35,24 @@ public class RegionWareServiceImpl extends ServiceImpl<RegionWareMapper, RegionW
 
         IPage<RegionWare> regionWarePage = baseMapper.selectPage(pageParam, wrapper);
         return regionWarePage;
+    }
+
+    @Override
+    public void saveRegionSave(RegionWare regionWare) {
+        LambdaQueryWrapper<RegionWare> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(RegionWare::getRegionId,regionWare.getRegionId());
+        Integer count = baseMapper.selectCount(wrapper);
+        if (count>0){
+            throw new SsyxException(ResultCodeEnum.REGION_OPEN);
+        }
+        baseMapper.insert(regionWare);
+    }
+
+    @Override
+    public void updateStatus(Long id, Integer status) {
+        RegionWare regionWare = new RegionWare();
+        regionWare.setStatus(status);
+        regionWare.setId(id);
+        baseMapper.updateById(regionWare);
     }
 }
