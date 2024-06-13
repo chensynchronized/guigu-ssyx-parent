@@ -84,7 +84,7 @@ public class RegionWareController {
      *       data: idList
      */
     @ApiOperation("批量删除开通区域")
-    @DeleteMapping("delete")
+    @DeleteMapping("batchRemove")
     public Result batchRemove(@RequestBody List idList){
         regionWareService.removeByIds(idList);
         return Result.ok(null);
